@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Master Template - Luxury Boutique Hotel & Bed & Breakfast. Premium responsive layout.">
+  <title>The Haven | Boutique Hotel & Bed & Breakfast</title>
+
+  <!-- Google Fonts: Elegant serif for headings, clean sans-serif for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Flatpickr Datepicker CSS (CDN) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- JavaScript Dependencies (loaded asynchronously to prevent render-blocking) -->
+  <!-- Flatpickr Datepicker library JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
+  <!-- Custom Javascript -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="header">
+    <div class="container">
+      <!-- CLIENT LOGO / NAME PLACEHOLDER -->
+      <!-- Link redirects to top of the page. Replace text or insert <img> tag below -->
+      <!-- INSERT LOGO HERE -->
+      <a href="#" class="logo">THE HAVEN</a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links">
+        <a href="#" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#booking">Contact & Booking</a>
+      </nav>
+
+      <!-- Desktop Book Now CTA -->
+      <div class="header-cta">
+        <a href="#booking" class="btn btn-outline">Book Now</a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" aria-expanded="false" aria-controls="mobileNav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MOBILE NAVIGATION OVERLAY (SLIDE-OUT)
+       ========================================================================== -->
+  <div class="mobile-nav-overlay" id="mobileNav" aria-hidden="true">
+    <nav class="mobile-nav-links">
+      <a href="#">Home</a>
+      <a href="#about">About</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#booking">Contact & Booking</a>
+    </nav>
+    <a href="#booking" class="btn btn-primary">Book Now</a>
+  </div>
+
+  <!-- ==========================================================================
+       HERO SECTION & INTEGRATED BOOKING BAR
+       ========================================================================== -->
+  <section class="hero">
+    <!-- HERO BACKGROUND IMAGE PLACEHOLDER -->
+    <!-- INSERT HERO BACKGROUND IMAGE HERE -->
+    <!-- Recommended dimensions: 1920x1080px. High-end, atmospheric imagery -->
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80" alt="Boutique Hotel Atmosphere" width="1920" height="1080" fetchpriority="high">
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <!-- INSERT HERO SUBTITLE / LOGLINE HERE -->
+      <span class="hero-subtitle">Serenity Defined</span>
+      <!-- INSERT HERO HEADLINE HERE -->
+      <h1 class="hero-title">Your Private Sanctuary in the Heart of Nature</h1>
+      <!-- INSERT HERO TAGLINE HERE -->
+      <p class="hero-tagline">A curated boutique hotel experience where luxury meets tranquil restoration.</p>
+    </div>
+
+    <!-- Integrated Booking Bar -->
+    <div class="booking-bar-wrapper container">
+      <form class="booking-bar" name="hero-booking" method="POST" data-netlify="true">
+        <!-- Netlify identification hidden input -->
+        <input type="hidden" name="form-name" value="hero-booking">
+
+        <!-- Check-in Date -->
+        <div class="form-group">
+          <label for="hero_check_in">Check-In</label>
+          <div class="input-with-icon">
+            <input type="text" id="hero_check_in" name="check_in_date" placeholder="Select Date" required>
+            <!-- Calendar Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
+        </div>
+
+        <!-- Check-out Date -->
+        <div class="form-group">
+          <label for="hero_check_out">Check-Out</label>
+          <div class="input-with-icon">
+            <input type="text" id="hero_check_out" name="check_out_date" placeholder="Select Date" required>
+            <!-- Calendar Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
+        </div>
+
+        <!-- Guests selection -->
+        <div class="form-group">
+          <label for="hero_guests">Guests</label>
+          <div class="input-with-icon">
+            <select id="hero_guests" name="guest_count" required>
+              <option value="1">1 Guest</option>
+              <option value="2" selected>2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="5+">5+ Guests</option>
+            </select>
+            <!-- User Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+        </div>
+
+        <!-- Hidden room field to keep data consistent with spreadsheet expectations -->
+        <input type="hidden" name="room_preference" value="Any Available">
+
+        <!-- Search button -->
+        <button type="submit" class="btn btn-primary">Check Availability</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       INTRODUCTION / ABOUT SECTION
+       ========================================================================== -->
+  <section id="about" class="section-padding">
+    <div class="container">
+      <div class="about-grid">
+        <!-- Text Content -->
+        <div class="about-content">
+          <!-- INSERT ABOUT SUBTITLE HERE -->
+          <span class="section-subtitle">Welcome to The Haven</span>
+          <!-- INSERT ABOUT TITLE HERE -->
+          <h2 class="section-title" style="margin-bottom: 30px;">A peaceful refuge crafted for intentional living.</h2>
+          <!-- INSERT ABOUT LEAD TEXT HERE -->
+          <p class="about-lead">Discover an intimate escape designed to slow you down and reconnect you to the elements.</p>
+          <!-- INSERT ABOUT BODY TEXT HERE -->
+          <p class="about-text">Located along the rugged coastline, The Haven merges architectural simplicity with warm, personalized B&B hospitality. Each corner is constructed with native stone, timber, and soft linens, creating an atmospheric retreat where your morning coffee is accompanied by nothing but bird songs and breaking waves.</p>
+          <!-- INSERT ABOUT SIGNATURE NAME HERE -->
+          <span class="about-signature">Elena &amp; Marcus, Proprietors</span>
+        </div>
+
+        <!-- Image Wrapper -->
+        <div class="about-image">
+          <!-- ABOUT IMAGE PLACEHOLDER -->
+          <!-- INSERT ABOUT IMAGE HERE -->
+          <!-- Recommended dimensions: 800x1000px (vertical orientation) -->
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Warm interior lounge at The Haven" width="800" height="1000" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ROOMS / ACCOMMODATION
+       ========================================================================== -->
+  <section id="rooms" class="section-padding" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <!-- Section Title -->
+      <div class="section-title-wrapper text-center">
+        <span class="section-subtitle">Accommodations</span>
+        <h2 class="section-title">Rooms &amp; Suites</h2>
+      </div>
+
+      <!-- Room Cards Grid -->
+      <div class="rooms-grid">
+        
+        <!-- ROOM 1: THE DELUXE SUITE -->
+        <div class="room-card">
+          <div class="room-image-wrapper">
+            <!-- INSERT ROOM 1 IMAGE HERE -->
+            <!-- Recommended dimensions: 600x450px -->
+            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=600&q=80" alt="The Deluxe Suite Room" width="600" height="450" loading="lazy">
+            <span class="room-price-badge">From $280 / Night</span>
+          </div>
+          <div class="room-content">
+            <!-- INSERT ROOM 1 TITLE HERE -->
+            <h3 class="room-title">Deluxe Ocean Suite</h3>
+            <!-- INSERT ROOM 1 DESCRIPTION HERE -->
+            <p class="room-description">An expansive layout offering floor-to-ceiling panoramic views of the water, a private freestanding copper bath, and private terrace access.</p>
+            
+            <!-- Key Features Icons -->
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+                <span>Free WiFi</span>
+              </div>
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16M2 8h20M22 4v16M2 18h20M10 8v10M14 8v10"></path></svg>
+                <span>King Bed</span>
+              </div>
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>Ocean View</span>
+              </div>
+            </div>
+
+            <!-- CTA: Links to inquiry and auto-selects Room type -->
+            <a href="#booking" class="btn btn-secondary room-booking-cta" data-room-type="deluxe_suite">Book Suite</a>
+          </div>
+        </div>
+
+        <!-- ROOM 2: GARDEN COTTAGE -->
+        <div class="room-card">
+          <div class="room-image-wrapper">
+            <!-- INSERT ROOM 2 IMAGE HERE -->
+            <!-- Recommended dimensions: 600x450px -->
+            <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" alt="Garden Cottage" width="600" height="450" loading="lazy">
+            <span class="room-price-badge">From $195 / Night</span>
+          </div>
+          <div class="room-content">
+            <!-- INSERT ROOM 2 TITLE HERE -->
+            <h3 class="room-title">Orchard Cottage</h3>
+            <!-- INSERT ROOM 2 DESCRIPTION HERE -->
+            <p class="room-description">Nestled in our historic pear orchard, this standalone cottage features an open wood fireplace, rustic beams, and complete seclusion.</p>
+            
+            <!-- Key Features Icons -->
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+                <span>Free WiFi</span>
+              </div>
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16M2 8h20M22 4v16M2 18h20M10 8v10M14 8v10"></path></svg>
+                <span>Queen Bed</span>
+              </div>
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-4M8 18h8V8a4 4 0 0 0-8 0v10z"></path></svg>
+                <span>Fireplace</span>
+              </div>
+            </div>
+
+            <!-- CTA: Links to inquiry and auto-selects Room type -->
+            <a href="#booking" class="btn btn-secondary room-booking-cta" data-room-type="orchard_cottage">Book Cottage</a>
+          </div>
+        </div>
+
+        <!-- ROOM 3: LOFT APARTMENT -->
+        <div class="room-card">
+          <div class="room-image-wrapper">
+            <!-- INSERT ROOM 3 IMAGE HERE -->
+            <!-- Recommended dimensions: 600x450px -->
+            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80" alt="Loft Apartment Room" width="600" height="450" loading="lazy">
+            <span class="room-price-badge">From $150 / Night</span>
+          </div>
+          <div class="room-content">
+            <!-- INSERT ROOM 3 TITLE HERE -->
+            <h3 class="room-title">Timber Loft</h3>
+            <!-- INSERT ROOM 3 DESCRIPTION HERE -->
+            <p class="room-description">An elegant upper-level loft with exposed structural frames, a compact skylighted kitchenette, and warm minimalist design details.</p>
+            
+            <!-- Key Features Icons -->
+            <div class="room-features">
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+                <span>Free WiFi</span>
+              </div>
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16M2 8h20M22 4v16M2 18h20M10 8v10M14 8v10"></path></svg>
+                <span>Double Bed</span>
+              </div>
+              <div class="room-feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <span>Kitchenette</span>
+              </div>
+            </div>
+
+            <!-- CTA: Links to inquiry and auto-selects Room type -->
+            <a href="#booking" class="btn btn-secondary room-booking-cta" data-room-type="timber_loft">Book Loft</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       AMENITIES SECTION
+       ========================================================================== -->
+  <section id="amenities" class="section-padding">
+    <div class="container">
+      <!-- Section Title -->
+      <div class="section-title-wrapper text-center">
+        <span class="section-subtitle">Our Offerings</span>
+        <h2 class="section-title">Sensory Experiences Included</h2>
+      </div>
+
+      <!-- Amenities Grid -->
+      <div class="amenities-grid">
+        
+        <!-- AMENITY 1: BREAKFAST -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper">
+            <!-- Coffee / Hot Cup Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+          </div>
+          <!-- INSERT AMENITY 1 TITLE HERE -->
+          <h3 class="amenity-title">Artisanal Breakfast</h3>
+          <!-- INSERT AMENITY 1 DESC HERE -->
+          <p class="amenity-desc">Freshly baked sourdough, local cheeses, seasonal fruits, and single-origin coffee served to your room daily.</p>
+        </div>
+
+        <!-- AMENITY 2: WI-FI -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper">
+            <!-- Wi-Fi Waves Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+          </div>
+          <!-- INSERT AMENITY 2 TITLE HERE -->
+          <h3 class="amenity-title">High-Speed Fiber</h3>
+          <!-- INSERT AMENITY 2 DESC HERE -->
+          <p class="amenity-desc">Seamless high-speed internet throughout the property, allowing for effortless remote work in any quiet corner.</p>
+        </div>
+
+        <!-- AMENITY 3: PARKING -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper">
+            <!-- Car Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          </div>
+          <!-- INSERT AMENITY 3 TITLE HERE -->
+          <h3 class="amenity-title">Secure Parking</h3>
+          <!-- INSERT AMENITY 3 DESC HERE -->
+          <p class="amenity-desc">Gated on-site parking spaces fully secured with camera monitoring and Level 2 electric vehicle charging stations.</p>
+        </div>
+
+        <!-- AMENITY 4: SPA BATH -->
+        <div class="amenity-card">
+          <div class="amenity-icon-wrapper">
+            <!-- Bath / Drop Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-4.3-7-9-7-9s-7 4.7-7 9a7 7 0 0 0 7 7z"></path></svg>
+          </div>
+          <!-- INSERT AMENITY 4 TITLE HERE -->
+          <h3 class="amenity-title">Premium Botanicals</h3>
+          <!-- INSERT AMENITY 4 DESC HERE -->
+          <p class="amenity-desc">Organic, local bath and shower products, alongside customized therapeutic essential oil blends in every suite.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       GALLERY SECTION
+       ========================================================================== -->
+  <section id="gallery" class="section-padding" style="background-color: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title-wrapper text-center">
+        <span class="section-subtitle">Visual Journey</span>
+        <h2 class="section-title">Moments at The Haven</h2>
+      </div>
+
+      <!-- 3D Carousel Gallery Container -->
+      <div class="carousel-container">
+        <!-- Previous Arrow Button -->
+        <button class="carousel-prev" id="prevSlideBtn" aria-label="Previous image">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        
+        <!-- 3D Sliding Track -->
+        <div class="carousel-track">
+          <!-- Slide 1 -->
+          <div class="carousel-slide">
+            <!-- INSERT GALLERY IMAGE 1 HERE -->
+            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80" alt="The Fireplace Lounge" width="800" height="533" loading="lazy">
+            <div class="carousel-overlay">
+              <span class="carousel-caption">The Fireplace Lounge</span>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-slide">
+            <!-- INSERT GALLERY IMAGE 2 HERE -->
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Cliffside Infinity Pool" width="800" height="533" loading="lazy">
+            <div class="carousel-overlay">
+              <span class="carousel-caption">Cliffside Infinity Pool</span>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-slide">
+            <!-- INSERT GALLERY IMAGE 3 HERE -->
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" alt="Sunset Ocean Terrace" width="1200" height="800" loading="lazy">
+            <div class="carousel-overlay">
+              <span class="carousel-caption">Sunset Ocean Terrace</span>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="carousel-slide">
+            <!-- INSERT GALLERY IMAGE 4 HERE -->
+            <img src="https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?auto=format&fit=crop&w=800&q=80" alt="Morning Dining Nook" width="800" height="533" loading="lazy">
+            <div class="carousel-overlay">
+              <span class="carousel-caption">Morning Dining Nook</span>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="carousel-slide">
+            <!-- INSERT GALLERY IMAGE 5 HERE -->
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80" alt="Private Coast Trails" width="800" height="533" loading="lazy">
+            <div class="carousel-overlay">
+              <span class="carousel-caption">Private Coast Trails</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Arrow Button -->
+        <button class="carousel-next" id="nextSlideBtn" aria-label="Next image">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       REVIEWS / TESTIMONIALS SECTION
+       ========================================================================== -->
+  <section id="reviews" class="section-padding" style="background-color: var(--bg-color);">
+    <div class="container">
+      <div class="section-title-wrapper text-center">
+        <span class="section-subtitle">Guest Experiences</span>
+        <h2 class="section-title">Whispers of Serenity</h2>
+      </div>
+
+      <!-- Floating Reviews Carousel Container -->
+      <div class="reviews-carousel-container">
+        
+        <!-- Large decorative background quote mark -->
+        <div class="reviews-quote-mark">&ldquo;</div>
+
+        <div class="reviews-carousel-track">
+          <!-- Review 1 -->
+          <div class="review-slide active">
+            <div class="review-stars">
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <blockquote class="review-text">
+              "A truly restorative getaway. The attention to detail is remarkable—from the linen sheets to the morning sourdough basket. We sat on our private terrace watching the ocean fog roll in and felt completely disconnected from the noise of the city."
+            </blockquote>
+            <div class="review-author">
+              <div class="author-avatar">SC</div>
+              <div class="author-info">
+                <span class="author-name">Sarah Connor</span>
+                <span class="author-details">Deluxe Ocean Suite &bull; October 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 2 -->
+          <div class="review-slide">
+            <div class="review-stars">
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <blockquote class="review-text">
+              "The Orchard Cottage is a masterpiece of rustic simplicity. Having the wood fireplace crackling in the evening while reading under the exposed timber frame was magical. Elena and Marcus are wonderful hosts who make you feel like family."
+            </blockquote>
+            <div class="review-author">
+              <div class="author-avatar">DK</div>
+              <div class="author-info">
+                <span class="author-name">David Kovacs</span>
+                <span class="author-details">Orchard Cottage &bull; September 2026</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review 3 -->
+          <div class="review-slide">
+            <div class="review-stars">
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              <svg class="star-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <blockquote class="review-text">
+              "We spent three nights in the Timber Loft. The space was incredibly well designed and functional, with gorgeous sunset views through the skylight. The bath products smelled heavenly, and the high-speed fiber made remote work a breeze."
+            </blockquote>
+            <div class="review-author">
+              <div class="author-avatar">AH</div>
+              <div class="author-info">
+                <span class="author-name">Alice H.</span>
+                <span class="author-details">Timber Loft &bull; August 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Combined Dots & Arrows Controls -->
+        <div class="reviews-controls">
+          <button class="reviews-prev" id="prevReviewBtn" aria-label="Previous testimonial">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          
+          <div class="reviews-dots">
+            <button class="review-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+            <button class="review-dot" data-slide="1" aria-label="Go to slide 2"></button>
+            <button class="review-dot" data-slide="2" aria-label="Go to slide 3"></button>
+          </div>
+
+          <button class="reviews-next" id="nextReviewBtn" aria-label="Next testimonial">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       DETAILED BOOKING / INQUIRY FORM (NETLIFY)
+       ========================================================================== -->
+  <section id="booking" class="section-padding inquiry-section">
+    <div class="container">
+      <div class="inquiry-container">
+        
+        <!-- Form Header -->
+        <div class="text-center" style="margin-bottom: 40px;">
+          <span class="section-subtitle">Reservations</span>
+          <h2 class="section-title" style="font-size: 36px;">Request Your Stay</h2>
+          <p style="margin-top: 10px;">Please submit your desired dates and room preferences. We will confirm availability and secure your booking within 2 hours.</p>
+        </div>
+
+        <!-- Netlify Configured Form -->
+        <form name="detailed-inquiry" method="POST" data-netlify="true" class="inquiry-form-grid">
+          <!-- Netlify identification hidden input -->
+          <input type="hidden" name="form-name" value="detailed-inquiry">
+
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="inquiry_name">Full Name</label>
+            <div class="input-with-icon">
+              <input type="text" id="inquiry_name" name="full_name" placeholder="John Doe" required>
+              <!-- User Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <div class="form-error-msg">Please enter your full name.</div>
+            </div>
+          </div>
+
+          <!-- Email Address -->
+          <div class="form-group">
+            <label for="inquiry_email">Email Address</label>
+            <div class="input-with-icon">
+              <input type="email" id="inquiry_email" name="client_email" placeholder="john@example.com" required>
+              <!-- Mail Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <div class="form-error-msg">Please enter a valid email address.</div>
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="inquiry_phone">Phone Number</label>
+            <div class="input-with-icon">
+              <input type="tel" id="inquiry_phone" name="client_phone" placeholder="+1 (555) 000-0000" required>
+              <!-- Phone Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <div class="form-error-msg">Please enter your telephone number.</div>
+            </div>
+          </div>
+
+          <!-- Accommodation/Room Selection -->
+          <div class="form-group">
+            <label for="inquiry_room_type">Selected Room</label>
+            <div class="input-with-icon">
+              <select id="inquiry_room_type" name="room_type" required>
+                <option value="" disabled selected>Choose a Room...</option>
+                <option value="deluxe_suite">Deluxe Ocean Suite</option>
+                <option value="orchard_cottage">Orchard Cottage</option>
+                <option value="timber_loft">Timber Loft</option>
+              </select>
+              <!-- Key Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+            </div>
+          </div>
+
+          <!-- Check-in Date -->
+          <div class="form-group">
+            <label for="inquiry_check_in">Check-In Date</label>
+            <div class="input-with-icon">
+              <input type="text" id="inquiry_check_in" name="check_in_date" placeholder="Select Date" required>
+              <!-- Calendar Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+          </div>
+
+          <!-- Check-out Date -->
+          <div class="form-group">
+            <label for="inquiry_check_out">Check-Out Date</label>
+            <div class="input-with-icon">
+              <input type="text" id="inquiry_check_out" name="check_out_date" placeholder="Select Date" required>
+              <!-- Calendar Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+          </div>
+
+          <!-- Guest Count Selection -->
+          <div class="form-group form-colspan-2">
+            <label for="inquiry_guests">Total Guests</label>
+            <div class="input-with-icon">
+              <select id="inquiry_guests" name="guest_count" required>
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5+">5+ Guests</option>
+              </select>
+              <!-- Users Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </div>
+          </div>
+
+          <!-- Special Requests Textarea -->
+          <div class="form-group form-colspan-2">
+            <label for="inquiry_requests">Special Requests / Preferences</label>
+            <div class="input-with-icon">
+              <textarea id="inquiry_requests" name="special_requests" placeholder="Let us know if you require dietary accommodations, airport transfers, or early check-in..."></textarea>
+              <!-- Edit Icon SVG -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-colspan-2">
+            <button type="submit" class="btn btn-primary">Send Booking Inquiry</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Column 1: Brand & Bio -->
+        <div class="footer-col">
+          <!-- CLIENT LOGO PLACEHOLDER -->
+          <!-- INSERT LOGO HERE -->
+          <div class="logo">THE HAVEN</div>
+          <p class="footer-desc">A premium coastal sanctuary offering mindful accommodation and curated boutique experiences for the conscious traveler.</p>
+          
+          <!-- Social Icons (SVGs for crisp, modern rendering without font packages) -->
+          <div class="social-links">
+            <a href="#" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" aria-label="Pinterest">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="2" x2="22" y2="6"></line><path d="M7.5 10.5c.83-.5 1.5-1.5 1.5-2.5 0-1.66-1.34-3-3-3S3 6.34 3 8c0 1 1 2.5 2 3l1 7h3l-1.5-7.5z"></path></svg>
+            </a>
+            <a href="#" aria-label="Tripadvisor">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="8" cy="12" r="2.5"></circle><circle cx="16" cy="12" r="2.5"></circle></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: Navigation Links -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Explore</h4>
+          <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#about">About</a>
+            <a href="#rooms">Rooms</a>
+            <a href="#amenities">Amenities</a>
+            <a href="#booking">Contact</a>
+          </div>
+        </div>
+
+        <!-- Column 3: Rooms Direct Selection Links -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Rooms</h4>
+          <div class="footer-links">
+            <a href="#rooms">Deluxe Ocean Suite</a>
+            <a href="#rooms">Orchard Cottage</a>
+            <a href="#rooms">Timber Loft</a>
+          </div>
+        </div>
+
+        <!-- Column 4: Contact Details -->
+        <div class="footer-col">
+          <h4 class="footer-col-title">Contact</h4>
+          
+          <div class="footer-contact-item">
+            <!-- Map Pin SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <!-- INSERT CONTACT ADDRESS HERE -->
+            <span>128 Sanctuary Cove Rd,<br>Big Sur, CA 93920</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <!-- Phone SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <!-- INSERT CONTACT PHONE HERE -->
+            <span>+1 (831) 555-0199</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <!-- Mail SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <!-- INSERT CONTACT EMAIL HERE -->
+            <span>hello@thehavenbigsur.com</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 The Haven Boutique Hotel. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MOBILE BOTTOM ACTION BAR (MOBILE ONLY)
+       ========================================================================== -->
+  <div class="mobile-action-bar">
+    <!-- Call Now Button -->
+    <!-- INSERT TELEPHONE LINK HERE -->
+    <a href="tel:+18315550199" class="btn btn-secondary action-btn-call">
+      <!-- Phone SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <span>Call Us</span>
+    </a>
+    
+    <!-- Direct Booking Scroll Button -->
+    <a href="#booking" class="btn btn-primary action-btn-book">
+      <!-- Calendar SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <span>Book Now</span>
+    </a>
+  </div>
+
+  <!-- ==========================================================================
+       SUCCESS MODAL (NATIVE DIALOG)
+       ========================================================================== -->
+  <dialog id="successModal" class="success-dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <div class="dialog-content">
+      <button class="dialog-close" id="closeModalBtn" aria-label="Close dialog">&times;</button>
+      <div class="dialog-icon">
+        <!-- Checkmark SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      </div>
+      <h3 class="dialog-title" id="dialogTitle">Inquiry Sent Successfully</h3>
+      <p class="dialog-message">Thank you for choosing The Haven. Your booking inquiry has been received, and our team will get in touch with you shortly to finalize your reservation.</p>
+      <button class="btn btn-primary dialog-btn" id="modalOkBtn">Close Window</button>
+    </div>
+  </dialog>
+
+
+</body>
+</html>
