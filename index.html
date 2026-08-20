@@ -9,22 +9,13 @@
   <!-- Google Fonts: Elegant serif for headings, clean sans-serif for body text -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Flatpickr Datepicker CSS (Loaded locally to eliminate connection latency) -->
-  <link rel="stylesheet" href="flatpickr.min.css">
+  <!-- Flatpickr Datepicker CSS (CDN) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- JavaScript Dependencies (loaded asynchronously to prevent render-blocking) -->
-  <!-- Flatpickr Datepicker library JS (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
-  <!-- Custom Javascript -->
-  <script src="script.js" defer></script>
 </head>
 <body>
 
@@ -83,12 +74,7 @@
     <!-- INSERT HERO BACKGROUND IMAGE HERE -->
     <!-- Recommended dimensions: 1920x1080px. High-end, atmospheric imagery -->
     <div class="hero-bg">
-      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80" 
-           srcset="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=640&q=70 640w,
-                   https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1280&q=75 1280w,
-                   https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80 1920w"
-           sizes="100vw"
-           alt="Boutique Hotel Atmosphere" width="1920" height="1080" fetchpriority="high">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&q=80" alt="Boutique Hotel Atmosphere">
     </div>
 
     <!-- Hero Content -->
@@ -177,7 +163,7 @@
           <!-- ABOUT IMAGE PLACEHOLDER -->
           <!-- INSERT ABOUT IMAGE HERE -->
           <!-- Recommended dimensions: 800x1000px (vertical orientation) -->
-          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=700&q=70" alt="Warm interior lounge at The Haven" width="800" height="1000" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80" alt="Warm interior lounge at The Haven">
         </div>
       </div>
     </div>
@@ -202,7 +188,7 @@
           <div class="room-image-wrapper">
             <!-- INSERT ROOM 1 IMAGE HERE -->
             <!-- Recommended dimensions: 600x450px -->
-            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=500&q=70" alt="The Deluxe Suite Room" width="600" height="450" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=600&q=80" alt="The Deluxe Suite Room">
             <span class="room-price-badge">From $280 / Night</span>
           </div>
           <div class="room-content">
@@ -237,7 +223,7 @@
           <div class="room-image-wrapper">
             <!-- INSERT ROOM 2 IMAGE HERE -->
             <!-- Recommended dimensions: 600x450px -->
-            <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=500&q=70" alt="Garden Cottage" width="600" height="450" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80" alt="Garden Cottage">
             <span class="room-price-badge">From $195 / Night</span>
           </div>
           <div class="room-content">
@@ -272,7 +258,7 @@
           <div class="room-image-wrapper">
             <!-- INSERT ROOM 3 IMAGE HERE -->
             <!-- Recommended dimensions: 600x450px -->
-            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=500&q=70" alt="Loft Apartment Room" width="600" height="450" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=600&q=80" alt="Loft Apartment Room">
             <span class="room-price-badge">From $150 / Night</span>
           </div>
           <div class="room-content">
@@ -394,7 +380,7 @@
           <!-- Slide 1 -->
           <div class="carousel-slide">
             <!-- INSERT GALLERY IMAGE 1 HERE -->
-            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=700&q=70" alt="The Fireplace Lounge" width="800" height="533" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&q=80" alt="The Fireplace Lounge">
             <div class="carousel-overlay">
               <span class="carousel-caption">The Fireplace Lounge</span>
             </div>
@@ -403,7 +389,7 @@
           <!-- Slide 2 -->
           <div class="carousel-slide">
             <!-- INSERT GALLERY IMAGE 2 HERE -->
-            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=700&q=70" alt="Cliffside Infinity Pool" width="800" height="533" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80" alt="Cliffside Infinity Pool">
             <div class="carousel-overlay">
               <span class="carousel-caption">Cliffside Infinity Pool</span>
             </div>
@@ -412,7 +398,7 @@
           <!-- Slide 3 -->
           <div class="carousel-slide">
             <!-- INSERT GALLERY IMAGE 3 HERE -->
-            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=70" alt="Sunset Ocean Terrace" width="1200" height="800" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80" alt="Sunset Ocean Terrace">
             <div class="carousel-overlay">
               <span class="carousel-caption">Sunset Ocean Terrace</span>
             </div>
@@ -421,7 +407,7 @@
           <!-- Slide 4 -->
           <div class="carousel-slide">
             <!-- INSERT GALLERY IMAGE 4 HERE -->
-            <img src="https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?auto=format&fit=crop&w=700&q=70" alt="Morning Dining Nook" width="800" height="533" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1498503182468-3b51cbb6cb24?auto=format&fit=crop&w=800&q=80" alt="Morning Dining Nook">
             <div class="carousel-overlay">
               <span class="carousel-caption">Morning Dining Nook</span>
             </div>
@@ -430,7 +416,7 @@
           <!-- Slide 5 -->
           <div class="carousel-slide">
             <!-- INSERT GALLERY IMAGE 5 HERE -->
-            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=700&q=70" alt="Private Coast Trails" width="800" height="533" loading="lazy">
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=800&q=80" alt="Private Coast Trails">
             <div class="carousel-overlay">
               <span class="carousel-caption">Private Coast Trails</span>
             </div>
@@ -759,6 +745,10 @@
         <div class="footer-bottom-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
+          <a href="admin.html" style="border: 1px solid rgba(255,255,255,0.25); padding: 4px 12px; border-radius: 4px; color: var(--accent, #c5a880) !important; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-size: 13px; transition: all 0.3s ease; background: rgba(255,255,255,0.02);" onmouseover="this.style.background='rgba(255,255,255,0.08)'; this.style.borderColor='var(--accent)';" onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.25)';">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:-1px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Admin Panel
+          </a>
         </div>
       </div>
     </div>
@@ -794,12 +784,23 @@
         <!-- Checkmark SVG -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
       </div>
-      <h3 class="dialog-title" id="dialogTitle">Inquiry Sent Successfully</h3>
-      <p class="dialog-message">Thank you for choosing The Haven. Your booking inquiry has been received, and our team will get in touch with you shortly to finalize your reservation.</p>
+      <h3 class="dialog-title" id="dialogTitle">Inquiry Received Successfully</h3>
+      <p class="dialog-message">Thank you for choosing The Haven! We have received your booking inquiry and sent a summary email to your address.</p>
+      <p class="dialog-message" style="font-size: 14px; color: var(--accent, #c5a880); margin-top: 12px; font-style: italic;">
+        <strong>Important Notice:</strong> This summary email is <strong>not</strong> a final booking confirmation. To finalize and secure your reservation, please wait for our staff to contact you shortly.
+      </p>
       <button class="btn btn-primary dialog-btn" id="modalOkBtn">Close Window</button>
     </div>
   </dialog>
 
+  <!-- ==========================================================================
+       SCRIPTS (CDN & Custom JS)
+       ========================================================================== -->
+  <!-- Flatpickr Datepicker library JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+  <!-- Custom Javascript -->
+  <script src="script.js"></script>
 
 </body>
 </html>

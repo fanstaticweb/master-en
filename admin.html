@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Haven - Booking Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <script>
+    // =========================================================================
+    // JELSZÓ BEÁLLÍTÁSA / PASSWORD CONFIGURATION
+    // You can modify the admin panel password here:
+    // =========================================================================
+    const ADMIN_PASSWORD = "admin";
+  </script>
+
+  <style>
+    :root {
+      --primary: #1c2d37;
+      --primary-light: #2b4554;
+      --accent: #c5a880;
+      --accent-dark: #b3946a;
+      --bg-main: #f8f9fa;
+      --bg-card: #ffffff;
+      --text-dark: #222222;
+      --text-muted: #666666;
+      --success: #2e7d32;
+      --success-bg: #e8f5e9;
+      --danger: #c62828;
+      --danger-bg: #ffebee;
+      --warning: #ef6c00;
+      --warning-bg: #fff3e0;
+      --border: #e0e0e0;
+      --shadow: 0 4px 12px rgba(0,0,0,0.05);
+      --radius: 12px;
+      --radius-sm: 6px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    /* --- LOGIN PANEL --- */
+    #loginOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      padding: 20px;
+    }
+
+    .login-card {
+      background-color: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .login-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .login-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .login-card input[type="password"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      margin-bottom: 20px;
+      outline: none;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .login-card input[type="password"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.2);
+    }
+
+    .login-card button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .login-card button:hover {
+      background-color: var(--primary-light);
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 14px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* --- ADMIN INTERFACE --- */
+    #adminContent {
+      display: none; /* Hidden until authentication */
+      padding-bottom: 80px;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .header-logo span {
+      color: var(--accent);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-header {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-header:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: white;
+    }
+
+    .btn-sync {
+      background-color: var(--accent);
+      color: var(--primary);
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-sync:hover {
+      background-color: var(--accent-dark);
+      color: var(--primary);
+    }
+
+    /* Spinning loader icon */
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --- DASHBOARD CONTROLS --- */
+    .controls-panel {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Search bar */
+    .search-container {
+      position: relative;
+      width: 100%;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 15px;
+      outline: none;
+      background-color: var(--bg-card);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    .search-container input:focus {
+      border-color: var(--accent);
+    }
+    .search-container svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Filters scroll list on mobile */
+    .filters-wrapper {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding-bottom: 5px;
+      scrollbar-width: none; /* Firefox */
+    }
+    .filters-wrapper::-webkit-scrollbar {
+      display: none; /* Safari & Chrome */
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .badge-count {
+      background-color: rgba(0,0,0,0.1);
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 11px;
+    }
+    .filter-btn.active .badge-count {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    /* Last synced info */
+    .sync-info {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: -5px;
+      padding: 0 5px;
+    }
+
+    /* View Switcher */
+    .view-switcher {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-card);
+      box-shadow: var(--shadow);
+      align-self: center;
+    }
+    .view-btn {
+      border: none;
+      padding: 8px 16px;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+    .view-btn.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* List View container styles */
+    .bookings-container.list-mode {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    
+    .booking-list-row {
+      background-color: var(--bg-card);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      transition: var(--transition);
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .booking-list-row:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .booking-list-row-status-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+    }
+    .booking-list-row-status-bar.pending { background-color: var(--warning); }
+    .booking-list-row-status-bar.approved { background-color: var(--success); }
+    .booking-list-row-status-bar.rejected { background-color: var(--danger); }
+
+    .booking-list-row-center {
+      font-size: 13px; 
+      color: var(--text-dark); 
+      text-align: center; 
+      min-width: 150px;
+    }
+
+    @media (max-width: 768px) {
+      .booking-list-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 16px 16px 16px 20px;
+      }
+      .booking-list-row-center {
+        text-align: left;
+        min-width: unset;
+      }
+    }
+
+    /* --- BOOKING LIST & CARDS --- */
+    .bookings-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    @media (min-width: 768px) {
+      .bookings-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .controls-panel {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .search-container {
+        max-width: 350px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .bookings-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Card styling */
+    .booking-card {
+      background-color: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .booking-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    /* Status indicator bar on left */
+    .card-status-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+    }
+    .card-status-bar.pending { background-color: var(--warning); }
+    .card-status-bar.approved { background-color: var(--success); }
+    .card-status-bar.rejected { background-color: var(--danger); }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .client-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 10px;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .status-badge.pending { color: var(--warning); background-color: var(--warning-bg); }
+    .status-badge.approved { color: var(--success); background-color: var(--success-bg); }
+    .status-badge.rejected { color: var(--danger); background-color: var(--danger-bg); }
+
+    .card-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .detail-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      color: var(--text-muted);
+      width: 85px;
+      flex-shrink: 0;
+    }
+
+    .detail-value {
+      color: var(--text-dark);
+      word-break: break-word;
+    }
+
+    .special-requests-box {
+      background-color: var(--bg-main);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-muted);
+      border-left: 2px solid var(--accent);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .card-actions {
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* Card buttons */
+    .btn-action {
+      flex: 1;
+      min-width: 70px;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      background-color: var(--bg-card);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-action:hover {
+      background-color: var(--bg-main);
+    }
+
+    .btn-action-approve {
+      border-color: var(--success);
+      color: var(--success);
+    }
+    .btn-action-approve:hover {
+      background-color: var(--success-bg);
+    }
+
+    .btn-action-reject {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .btn-action-reject:hover {
+      background-color: var(--danger-bg);
+    }
+
+    .btn-action-pending {
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+    .btn-action-pending:hover {
+      background-color: var(--warning-bg);
+    }
+
+    .btn-action-edit {
+      border-color: var(--primary);
+      background-color: var(--primary);
+      color: white;
+    }
+    .btn-action-edit:hover {
+      background-color: var(--primary-light);
+    }
+
+    /* --- DIALOG MODAL (EDIT) --- */
+    dialog {
+      border: none;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      padding: 0;
+      width: 90%;
+      max-width: 500px;
+      margin: auto;
+      outline: none;
+    }
+
+    dialog::backdrop {
+      background-color: rgba(28, 45, 55, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .dialog-header {
+      background-color: var(--primary);
+      color: white;
+      padding: 16px 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dialog-close {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .dialog-body {
+      padding: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .form-col-span-2 {
+        grid-column: span 2;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-group textarea {
+      height: 80px;
+      resize: vertical;
+    }
+
+    .dialog-footer {
+      padding: 15px 20px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-dialog-save {
+      background-color: var(--accent);
+      color: var(--primary);
+      border: none;
+      padding: 10px 20px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-dialog-save:hover {
+      background-color: var(--accent-dark);
+    }
+
+    .btn-dialog-cancel {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dark);
+      padding: 10px 20px;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-dialog-cancel:hover {
+      background-color: var(--bg-main);
+    }
+
+    /* --- TOAST NOTIFICATION --- */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 11000;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* --- EMPTY STATE --- */
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 15px;
+      color: var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. PASSWORD LOGIN PANEL -->
+  <div id="loginOverlay">
+    <div class="login-card">
+      <h1>The Haven</h1>
+      <p>Boutique Hotel & B&B Admin Panel</p>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <input type="password" id="passwordInput" placeholder="Enter Password" autocomplete="current-password" required>
+        <button type="submit">Login</button>
+      </form>
+      <div id="loginError" class="error-msg">Incorrect password! Please try again.</div>
+    </div>
+  </div>
+
+  <!-- 2. ADMIN MAIN CONTENT -->
+  <div id="adminContent">
+    <header>
+      <div class="header-container">
+        <div class="header-logo">
+          <h2>The Haven<span> Admin</span></h2>
+        </div>
+        <div class="header-actions">
+          <button class="btn-header btn-sync" id="syncBtn" onclick="syncData()">
+            <svg class="icon-sync" id="syncIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Sync
+          </button>
+          <button class="btn-header" onclick="handleLogout()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            Logout
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-panel">
+      <!-- Search -->
+      <div class="search-container">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" placeholder="Search by name, email or room..." oninput="filterAndRender()">
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-wrapper">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">
+          All <span class="badge-count" id="count-all">0</span>
+        </button>
+        <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">
+          Pending <span class="badge-count" id="count-pending">0</span>
+        </button>
+        <button class="filter-btn" data-filter="approved" onclick="setFilter('approved')">
+          Approved <span class="badge-count" id="count-approved">0</span>
+        </button>
+        <button class="filter-btn" data-filter="rejected" onclick="setFilter('rejected')">
+          Rejected <span class="badge-count" id="count-rejected">0</span>
+        </button>
+      </div>
+
+      <!-- View Switcher -->
+      <div class="view-switcher">
+        <button class="view-btn active" id="view-cards-btn" onclick="setView('cards')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+          Cards
+        </button>
+        <button class="view-btn" id="view-list-btn" onclick="setView('list')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          List
+        </button>
+      </div>
+    </div>
+
+    <div class="sync-info" id="lastSyncedTime">Last updated: Not synced</div>
+
+    <!-- Bookings List -->
+    <main class="bookings-container" id="bookingsList">
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <p>Click the sync button to load bookings.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- 3. EDIT DIALOG MODAL -->
+  <dialog id="editDialog">
+    <div class="dialog-header">
+      <span>Edit Booking</span>
+      <button class="dialog-close" onclick="closeEditModal()">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <form id="editForm" onsubmit="saveEdit(event)">
+        <!-- Hidden Timestamp Identifier -->
+        <input type="hidden" id="editTimestamp">
+        
+        <div class="form-grid">
+          <!-- Name -->
+          <div class="form-group form-col-span-2">
+            <label for="editName">Name</label>
+            <input type="text" id="editName" required>
+          </div>
+          
+          <!-- Email -->
+          <div class="form-group">
+            <label for="editEmail">Email</label>
+            <input type="email" id="editEmail" required>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="editPhone">Phone</label>
+            <input type="text" id="editPhone" required>
+          </div>
+
+          <!-- Room Selection -->
+          <div class="form-group">
+            <label for="editRoom">Room</label>
+            <select id="editRoom" required>
+              <option value="Deluxe Ocean Suite">Deluxe Ocean Suite</option>
+              <option value="Orchard Cottage">Orchard Cottage</option>
+              <option value="Timber Loft">Timber Loft</option>
+            </select>
+          </div>
+
+          <!-- Guest Count -->
+          <div class="form-group">
+            <label for="editGuests">Guests</label>
+            <select id="editGuests" required>
+              <option value="1">1 Guest</option>
+              <option value="2">2 Guests</option>
+              <option value="3">3 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="5+">5+ Guests</option>
+            </select>
+          </div>
+
+          <!-- Check-in -->
+          <div class="form-group">
+            <label for="editCheckIn">Check-in</label>
+            <input type="date" id="editCheckIn" required>
+          </div>
+
+          <!-- Check-out -->
+          <div class="form-group">
+            <label for="editCheckOut">Check-out</label>
+            <input type="date" id="editCheckOut" required>
+          </div>
+
+          <!-- Special Requests -->
+          <div class="form-group form-col-span-2">
+            <label for="editRequests">Special Requests / Preferences</label>
+            <textarea id="editRequests"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn-dialog-cancel" onclick="closeEditModal()">Cancel</button>
+      <button type="submit" form="editForm" class="btn-dialog-save">Save & Sync</button>
+    </div>
+  </dialog>
+
+  <!-- 5. EMAIL DIALOG MODAL -->
+  <dialog id="emailDialog">
+    <div class="dialog-header">
+      <span>Send Email to Guest</span>
+      <button class="dialog-close" onclick="closeEmailModal()">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <form id="emailForm" onsubmit="sendEmail(event)">
+        <!-- Hidden Timestamp Identifier -->
+        <input type="hidden" id="emailTimestamp">
+        
+        <div class="form-grid" style="grid-template-columns: 1fr;">
+          <!-- Guest Name -->
+          <div class="form-group">
+            <label>Guest Name</label>
+            <input type="text" id="emailGuestName" readonly style="background-color: var(--bg-main);">
+          </div>
+          
+          <!-- Guest Email -->
+          <div class="form-group">
+            <label>Guest Email</label>
+            <input type="text" id="emailGuestEmail" readonly style="background-color: var(--bg-main);">
+          </div>
+
+          <!-- Select Template -->
+          <div class="form-group">
+            <label for="emailTemplate">Select Email Template</label>
+            <select id="emailTemplate" onchange="updateEmailPreview()" required>
+              <option value="confirm">Confirm Booking (Approved)</option>
+              <option value="unavailable">Room/Dates Unavailable (Alternatives)</option>
+            </select>
+          </div>
+
+          <!-- Email Preview -->
+          <div class="form-group">
+            <label>Email Preview</label>
+            <div id="emailPreviewBox" style="border: 1px solid var(--border); padding: 15px; border-radius: var(--radius-sm); font-size: 13px; background-color: var(--bg-main); max-height: 250px; overflow-y: auto; line-height: 1.5; white-space: pre-wrap; font-family: 'Inter', sans-serif;">
+              <!-- Live preview loaded here -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" class="btn-dialog-cancel" onclick="closeEmailModal()">Cancel</button>
+      <button type="button" class="btn-dialog-cancel" onclick="copyEmailToClipboard()" style="background-color: var(--primary-light); border-color: var(--primary-light); color: white;">Copy Email</button>
+      <button type="button" class="btn-dialog-save" onclick="openMailClient()">Open Mail Client</button>
+    </div>
+  </dialog>
+
+  <!-- 4. TOAST NOTIFICATION -->
+  <div id="toast">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMessage">Action completed successfully!</span>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

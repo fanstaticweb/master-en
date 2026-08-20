@@ -3,7 +3,7 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   // --------------------------------------------------------------------------
   // 1. STICKY HEADER
   // --------------------------------------------------------------------------
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const toggleMenu = (show) => {
     const isOpening = show !== undefined ? show : !mobileNav.classList.contains('active');
-    
+
     if (isOpening) {
       mobileNav.classList.add('active');
       menuToggle.classList.add('active');
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   // 3. FLATPICKR CALENDAR LOGIC (HERO & DETAILED FORM)
   // --------------------------------------------------------------------------
-  
+
   // Date formatting utility
   const formatDate = (date) => {
     const d = new Date(date);
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* --- A. HERO BOOKING BAR DATEPICKERS --- */
   let heroCheckOutPicker;
-  
+
   const heroCheckInPicker = flatpickr("#hero_check_in", {
     dateFormat: "Y-m-d",
     minDate: "today",
@@ -108,15 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (selectedDates.length > 0) {
         const checkInDate = selectedDates[0];
         const nextDay = addDays(checkInDate, 1);
-        
+
         // Update Checkout minDate to Check-in date + 1 day
         heroCheckOutPicker.set("minDate", formatDate(nextDay));
-        
+
         // If checkout is empty, or is before or equal to check-in, update and auto-open checkout picker
         const currentCheckOutDate = heroCheckOutPicker.selectedDates[0];
         if (!currentCheckOutDate || currentCheckOutDate <= checkInDate) {
           heroCheckOutPicker.setDate(formatDate(nextDay));
-          
+
           // Small delay before opening to allow DOM updates
           setTimeout(() => {
             heroCheckOutPicker.open();
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* --- B. DETAILED INQUIRY FORM DATEPICKERS --- */
   let inquiryCheckOutPicker;
-  
+
   const inquiryCheckInPicker = flatpickr("#inquiry_check_in", {
     dateFormat: "Y-m-d",
     minDate: "today",
@@ -141,15 +141,15 @@ document.addEventListener('DOMContentLoaded', () => {
       if (selectedDates.length > 0) {
         const checkInDate = selectedDates[0];
         const nextDay = addDays(checkInDate, 1);
-        
+
         // Update Checkout minDate to Check-in date + 1 day
         inquiryCheckOutPicker.set("minDate", formatDate(nextDay));
-        
+
         // If checkout is empty, or is before or equal to check-in, update and auto-open checkout picker
         const currentCheckOutDate = inquiryCheckOutPicker.selectedDates[0];
         if (!currentCheckOutDate || currentCheckOutDate <= checkInDate) {
           inquiryCheckOutPicker.setDate(formatDate(nextDay));
-          
+
           setTimeout(() => {
             inquiryCheckOutPicker.open();
           }, 100);
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (heroCheckOutVal && inquiryCheckOutPicker) {
         inquiryCheckOutPicker.setDate(heroCheckOutVal, true);
       }
-      
+
       const inquiryGuestsSelect = document.getElementById('inquiry_guests');
       if (inquiryGuestsSelect && heroGuestsVal) {
         inquiryGuestsSelect.value = heroGuestsVal;
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const bookingSection = document.getElementById('booking');
       if (bookingSection) {
         bookingSection.scrollIntoView({ behavior: 'smooth' });
-        
+
         // Focus the name input for quick conversion
         const nameInput = document.getElementById('inquiry_name');
         if (nameInput) {
@@ -223,6 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   // 6. DETAILED FORM SUBMISSION & SUCCESS MODAL
   // --------------------------------------------------------------------------
+  // Google Sheets Apps Script Web App URL configuration.
+  // Replace the placeholder below with your deployed Google Apps Script Web App URL.
+  const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxyn6qA4XcsaDt_f0xseWmkuXSth7cZSxSmxk2tStuztWJbW5F7UkNgWvK-3BORYSJw/exec";
+
   const detailedForm = document.querySelector('form[name="detailed-inquiry"]');
   const successModal = document.getElementById('successModal');
   const closeModalBtn = document.getElementById('closeModalBtn');
@@ -235,20 +239,51 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(detailedForm);
       const searchParams = new URLSearchParams(formData);
 
-      // Perform AJAX POST request to Netlify
-      fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: searchParams.toString()
-      })
-      .then(response => {
-        if (response.ok) {
+      // Prepare data for Google Sheets
+      const sheetData = {
+        full_name: formData.get("full_name"),
+        client_email: formData.get("client_email"),
+        client_phone: formData.get("client_phone"),
+        room_type: formData.get("room_type"),
+        check_in_date: formData.get("check_in_date"),
+        check_out_date: formData.get("check_out_date"),
+        guest_count: formData.get("guest_count"),
+        special_requests: formData.get("special_requests")
+      };
+
+      // Perform AJAX POST request to Netlify (skip if testing locally on file:// or localhost)
+      const isLocal = window.location.protocol === "file:" || 
+                      window.location.hostname === "localhost" || 
+                      window.location.hostname === "127.0.0.1";
+                      
+      const netlifyPromise = isLocal
+        ? Promise.resolve({ ok: true })
+        : fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: searchParams.toString()
+          });
+
+      // Send to Google Sheets if configured
+      const sheetsPromise = GOOGLE_SHEETS_URL
+        ? fetch(GOOGLE_SHEETS_URL, {
+            method: "POST",
+            mode: "no-cors", // Prevents CORS blocks on static sites
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(sheetData).toString()
+          })
+        : Promise.resolve();
+
+      // Wait for both form submissions
+      Promise.all([netlifyPromise, sheetsPromise])
+      .then(([netlifyResponse]) => {
+        if (netlifyResponse.ok) {
           // Open the native HTML dialog modal
           successModal.showModal();
-          
+
           // Clear inputs and reset forms
           detailedForm.reset();
-          
+
           // Reset Flatpickr dates cleanly
           if (inquiryCheckInPicker) inquiryCheckInPicker.clear();
           if (inquiryCheckOutPicker) inquiryCheckOutPicker.clear();
@@ -261,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("An error occurred while sending your request. Please check your internet connection.");
       });
     });
+
 
     // Close button triggers
     if (closeModalBtn) {
@@ -295,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateCarousel = () => {
       carouselSlides.forEach((slide, index) => {
         slide.className = 'carousel-slide'; // Clear old layout classes
-        
+
         if (index === carouselIndex) {
           slide.classList.add('active');
         } else if (index === (carouselIndex - 1 + carouselSlides.length) % carouselSlides.length) {
@@ -345,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
       track.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].clientX;
         const swipeDistance = touchStartX - touchEndX;
-        
+
         if (Math.abs(swipeDistance) > 50) {
           if (swipeDistance > 0) {
             // Swipe Left -> Next Slide
@@ -463,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
       { id: 'amenities', element: document.getElementById('amenities') },
       { id: 'booking', element: document.getElementById('booking') }
     ];
-    
+
     const desktopNavLinks = document.querySelectorAll('.nav-links a');
     const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 
@@ -535,31 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     desktopNavLinks.forEach(link => link.addEventListener('click', handleLinkClick));
     mobileNavLinks.forEach(link => link.addEventListener('click', handleLinkClick));
-
-    // --------------------------------------------------------------------------
-    // 11. MOBILE BOTTOM ACTION BAR SCROLL REACTION (SHOW ON SCROLL DOWN, HIDE ON SCROLL UP)
-    // --------------------------------------------------------------------------
-    let lastScrollY = window.scrollY;
-    const mobileActionBar = document.querySelector('.mobile-action-bar');
-    
-    if (mobileActionBar) {
-      window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
-        
-        // Hide bar at the very top of the page (within 100px)
-        if (currentScrollY < 100) {
-          mobileActionBar.classList.remove('visible');
-        } else if (currentScrollY > lastScrollY) {
-          // Scrolling DOWN -> Show bar
-          mobileActionBar.classList.add('visible');
-        } else {
-          // Scrolling UP -> Hide bar
-          mobileActionBar.classList.remove('visible');
-        }
-        
-        lastScrollY = currentScrollY;
-      }, { passive: true });
-    }
 
     // Initialize layout
     updateCarousel();

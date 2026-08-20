@@ -1,6 +1,6 @@
 # Boutique Hotel / B&B Premium Website Template
 
-A premium, modern, and highly conversion-oriented static website template for boutique hotels, guest houses, and Bed & Breakfasts. 
+A premium, modern, and highly conversion-oriented static website template for boutique hotels, guest houses, and Bed & Breakfasts.
 
 Built using pure, lightweight vanilla technology (HTML5, CSS3, and modern JavaScript), this template is designed for lightning-fast loading speeds, responsiveness, and clean form automation.
 
@@ -24,23 +24,23 @@ Open [styles.css](file:///styles.css) and edit the following variables:
   --primary-color: #b89047;       /* Refined Gold / Brass Accent */
   --primary-hover: #a37d39;       /* Darker gold for hover states */
   --primary-light: #f7f2e8;       /* Very light gold wash for focus/backgrounds */
-  
+
   /* Base Neutral Colors */
   --bg-color: #faf8f5;            /* Sand / Warm Off-white */
   --bg-secondary: #f4efea;        /* Soft warm gray-sand */
   --bg-card: #ffffff;             /* Pure white for content cards */
   --text-color: #1a1d1a;          /* Charcoal Black for high contrast body text */
   --text-secondary: #5e645e;      /* Muted charcoal for descriptions */
-  
+
   /* Structural Colors */
   --border-color: #e5dfd8;        /* Delicate warm border */
   --border-focus: #b89047;        /* Form input active focus color */
   --error-color: #c94b4b;         /* Soft red for invalid form states */
-  
+
   /* Typography */
   --font-serif: 'Cormorant Garamond', Georgia, serif; /* Primary Headings */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif; /* Body Copy */
-  
+
   /* Layout & Spacing */
   --border-radius: 4px;           /* Radius for cards, buttons, and inputs */
 }
@@ -103,3 +103,6 @@ The datepickers use **Flatpickr**, a lightweight datepicker library, initialized
 
 ### Visual styling
 The Flatpickr theme is overwritten in `styles.css` under the `#12. FLATPICKR CALENDAR THEME CUSTOMIZATION` section. The styling overrides all default background gradients and states, aligning the selection states, font families, and borders with the minimalist hotel theme.
+
+### Google apps script url
+https://script.google.com/macros/s/AKfycbxyn6qA4XcsaDt_f0xseWmkuXSth7cZSxSmxk2tStuztWJbW5F7UkNgWvK-3BORYSJw/exec
