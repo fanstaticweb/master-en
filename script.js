@@ -536,6 +536,31 @@ document.addEventListener('DOMContentLoaded', () => {
     desktopNavLinks.forEach(link => link.addEventListener('click', handleLinkClick));
     mobileNavLinks.forEach(link => link.addEventListener('click', handleLinkClick));
 
+    // --------------------------------------------------------------------------
+    // 11. MOBILE BOTTOM ACTION BAR SCROLL REACTION (SHOW ON SCROLL DOWN, HIDE ON SCROLL UP)
+    // --------------------------------------------------------------------------
+    let lastScrollY = window.scrollY;
+    const mobileActionBar = document.querySelector('.mobile-action-bar');
+    
+    if (mobileActionBar) {
+      window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        
+        // Hide bar at the very top of the page (within 100px)
+        if (currentScrollY < 100) {
+          mobileActionBar.classList.remove('visible');
+        } else if (currentScrollY > lastScrollY) {
+          // Scrolling DOWN -> Show bar
+          mobileActionBar.classList.add('visible');
+        } else {
+          // Scrolling UP -> Hide bar
+          mobileActionBar.classList.remove('visible');
+        }
+        
+        lastScrollY = currentScrollY;
+      }, { passive: true });
+    }
+
     // Initialize layout
     updateCarousel();
   }
