@@ -68,6 +68,7 @@ function handleRead() {
 
 // 2. Insert new booking (from customer form)
 function handleInsert(parameter) {
+  parameter = parameter || {};
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var timestamp = new Date();
   var fullName = parameter.full_name || "";
@@ -169,6 +170,7 @@ function handleInsert(parameter) {
 
 // 3. Update existing booking (from admin panel)
 function handleUpdate(parameter) {
+  parameter = parameter || {};
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = sheet.getDataRange().getValues();
   
@@ -211,6 +213,7 @@ function handleUpdate(parameter) {
 
 // 4. Send email to guest from admin panel
 function handleSendEmail(parameter) {
+  parameter = parameter || {};
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = sheet.getDataRange().getValues();
   

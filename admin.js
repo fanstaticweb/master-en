@@ -94,7 +94,14 @@ async function syncData() {
 }
 
 // --- STATUS UPDATE (UPDATE STATUS) ---
-async function updateBookingStatus(timestamp, newStatus) {
+async function updateBookingStatus(timestamp, newStatus, skipConfirm = false) {
+  if (!skipConfirm && (newStatus === "Pending" || newStatus === "Rejected")) {
+    const actionText = newStatus === "Pending" ? "reset this booking to Pending status" : "reject this booking";
+    if (!confirm(`Are you sure you want to ${actionText}?`)) {
+      return;
+    }
+  }
+
   if (!GOOGLE_SHEETS_URL) {
     // Local update only if no URL is set
     const booking = bookingsData.find(b => b.timestamp === timestamp);
@@ -661,9 +668,9 @@ function copyEmailToClipboard() {
       showToast("Email text copied to clipboard!");
       closeEmailModal();
 
-      // Update status in sheet
+      // Update status in sheet (skip double-confirm since this is an explicit modal action)
       const newStatus = (template === "confirm") ? "Approved" : "Rejected";
-      updateBookingStatus(booking.timestamp, newStatus);
+      updateBookingStatus(booking.timestamp, newStatus, true);
     })
     .catch(err => {
       console.error("Clipboard copy failed: ", err);
@@ -687,7 +694,7 @@ function openMailClient() {
   // Open the mailto link
   window.location.href = mailtoUrl;
 
-  // Update status in sheet
+  // Update status in sheet (skip double-confirm since this is an explicit modal action)
   const newStatus = (template === "confirm") ? "Approved" : "Rejected";
-  updateBookingStatus(booking.timestamp, newStatus);
+  updateBookingStatus(booking.timestamp, newStatus, true);
 }
